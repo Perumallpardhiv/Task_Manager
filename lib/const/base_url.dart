@@ -1,4 +1,4 @@
 class ApiUrl {
-  static const baseUrl = 'http://192.168.159.1:3000/';
+  static const baseUrl = 'http://172.70.106.12:5000/';
   static const registerLogin = 'registerLogin';
 }

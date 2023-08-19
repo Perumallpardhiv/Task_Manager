@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_manager/api/auth_repo.dart';
 import 'package:task_manager/models/auth_model.dart';
 import 'package:task_manager/screens/homePage.dart';
@@ -13,6 +14,17 @@ class Login extends StatefulWidget {
 class _LoginState extends State<Login> {
   TextEditingController controller = TextEditingController();
   bool isLoading = false;
+  late final SharedPreferences prefs;
+
+  @override
+  void initState() {
+    super.initState();
+    sharedPreferencesIntialize();
+  }
+
+  sharedPreferencesIntialize() async {
+    prefs = await SharedPreferences.getInstance();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -80,11 +92,14 @@ class _LoginState extends State<Login> {
                           );
                           if (res.status ?? false) {
                             isLoading = false;
+                            prefs.setBool('isLogin', true);
+                            prefs.setString('token', res.token.toString());
                             // ignore: use_build_context_synchronously
                             Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const MyHomePage()),
+                                builder: (context) => const MyHomePage(),
+                              ),
                               (route) => false,
                             );
                             SnackBar snackBar = SnackBar(
@@ -141,7 +156,7 @@ class _LoginState extends State<Login> {
           ),
           isLoading
               ? Container(
-                color: Colors.deepPurple.shade50.withOpacity(0.5),
+                  color: Colors.deepPurple.shade50.withOpacity(0.5),
                   height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width,
                   child: Center(

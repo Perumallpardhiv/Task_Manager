@@ -8,39 +8,50 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text("TASK MANAGER"),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.deepPurple.shade300,
+          toolbarHeight: 70,
+          title: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                "TASK MANAGER",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 22.5,
+                  color: Colors.white,
+                ),
+              ),
+              Divider(
+                indent: MediaQuery.of(context).size.width / 4.5,
+                endIndent: MediaQuery.of(context).size.width / 4.5,
+                height: 7.5,
+              ),
+              const Text(
+                "FLUTTER X NODEJS",
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 10,
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
+          centerTitle: true,
+          elevation: 2,
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
+        body: const Center(),
+        floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.deepPurple.shade200,
+          onPressed: (){},
+          tooltip: 'Add Task',
+          child: const Icon(Icons.add),
+        ),
       ),
     );
   }

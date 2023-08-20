@@ -6,7 +6,6 @@ import 'package:task_manager/models/auth_model.dart';
 class AuthRepository {
   Future authResponse(String name) async {
     var postBody = {"name": name};
-    print(name);
     Uri url = Uri.parse("${ApiUrl.baseUrl}${ApiUrl.registerLogin}");
     final response = await http.post(
       url,

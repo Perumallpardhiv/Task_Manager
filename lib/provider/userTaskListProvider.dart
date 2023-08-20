@@ -23,7 +23,7 @@ class ProviderList with ChangeNotifier {
       );
 
       if (response.statusCode == 200) {
-        userTaskResponseModel res = userTaskResponseModel.fromJson(
+        userAllTaskResponseModel res = userAllTaskResponseModel.fromJson(
           jsonDecode(response.body),
         );
         posts = res.success;

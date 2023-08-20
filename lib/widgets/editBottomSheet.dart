@@ -1,33 +1,33 @@
 import 'package:flutter/material.dart';
-import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_manager/provider/addTaskProvider.dart';
 
-class CustomBottomSheet extends StatefulWidget {
+// ignore: must_be_immutable
+class EditBottomSheet extends StatefulWidget {
+  String? id;
+  String? title;
+  String? desc;
+  EditBottomSheet(
+      {required this.id, required this.title, required this.desc, super.key});
   @override
-  State<CustomBottomSheet> createState() => _CustomBottomSheetState();
+  State<EditBottomSheet> createState() => _EditBottomSheetState();
 }
 
-class _CustomBottomSheetState extends State<CustomBottomSheet> {
+class _EditBottomSheetState extends State<EditBottomSheet> {
   ProviderAdd prov = ProviderAdd();
   TextEditingController title = TextEditingController();
   TextEditingController desc = TextEditingController();
-  String uid = "";
 
   @override
   void initState() {
     super.initState();
     prov = Provider.of<ProviderAdd>(context, listen: false);
-    sharedPreferencesIntialize();
+    controllerSetup();
   }
 
-  sharedPreferencesIntialize() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    Map<String, dynamic> jwtDecodeToken =
-        JwtDecoder.decode(prefs.getString('token')!);
-    uid = jwtDecodeToken['_id'];
-    setState(() {});
+  controllerSetup() async {
+    title = TextEditingController(text: widget.title);
+    desc = TextEditingController(text: widget.desc);
   }
 
   @override
@@ -42,7 +42,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  "ADD NEW TASK",
+                  "UPDATE TASK",
                   style: TextStyle(
                     fontSize: 25,
                     color: Colors.deepPurple.shade800,
@@ -112,15 +112,21 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                   children: [
                     ElevatedButton.icon(
                       onPressed: () {
-                        Navigator.pop(context);
+                        prov.deleteTask(widget.id!);
+                        if (prov.message == "") {
+                          Navigator.of(context).pop();
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text(prov.message)));
+                        }
                       },
-                      label: Icon(Icons.cancel_outlined),
-                      icon: Text('Cancel'),
+                      label: Icon(Icons.delete_outline_outlined),
+                      icon: Text('Delete'),
                     ),
                     ElevatedButton.icon(
                       onPressed: () {
                         if (title.text.isNotEmpty && desc.text.isNotEmpty) {
-                          prov.addTask(uid, title.text, desc.text);
+                          prov.updateTask(widget.id.toString(), title.text, desc.text);
 
                           if (prov.message == "") {
                             Navigator.of(context).pop();
@@ -130,8 +136,8 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                           }
                         }
                       },
-                      label: Text('Add'),
-                      icon: Icon(Icons.check_circle_outline_outlined),
+                      label: Text('Edit'),
+                      icon: Icon(Icons.edit_outlined),
                     ),
                   ],
                 )

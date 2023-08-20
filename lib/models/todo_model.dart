@@ -1,10 +1,10 @@
-class userTaskResponseModel {
+class userAllTaskResponseModel {
   bool? status;
   List<userTaskList>? success;
 
-  userTaskResponseModel({required this.status, required this.success});
+  userAllTaskResponseModel({required this.status, required this.success});
 
-  userTaskResponseModel.fromJson(Map<String, dynamic> json) {
+  userAllTaskResponseModel.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     if (json['success'] != null) {
       success = <userTaskList>[];
@@ -30,7 +30,11 @@ class userTaskList {
   String? title;
   String? desc;
 
-  userTaskList({required this.id, required this.userId, required this.title, required this.desc});
+  userTaskList(
+      {required this.id,
+      required this.userId,
+      required this.title,
+      required this.desc});
 
   userTaskList.fromJson(Map<String, dynamic> json) {
     id = json['_id'];

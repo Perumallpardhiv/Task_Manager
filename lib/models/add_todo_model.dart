@@ -1,10 +1,10 @@
-class userAddTask {
+class userTask {
   bool? status;
   AddTask? success;
 
-  userAddTask({this.status, this.success});
+  userTask({this.status, this.success});
 
-  userAddTask.fromJson(Map<String, dynamic> json) {
+  userTask.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     success =
         json['success'] != null ? new AddTask.fromJson(json['success']) : null;

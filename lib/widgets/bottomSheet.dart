@@ -3,6 +3,7 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_manager/provider/addTaskProvider.dart';
+import 'package:task_manager/provider/userTaskListProvider.dart';
 
 class CustomBottomSheet extends StatefulWidget {
   @override
@@ -11,6 +12,7 @@ class CustomBottomSheet extends StatefulWidget {
 
 class _CustomBottomSheetState extends State<CustomBottomSheet> {
   ProviderAdd prov = ProviderAdd();
+  ProviderList prov1 = ProviderList();
   TextEditingController title = TextEditingController();
   TextEditingController desc = TextEditingController();
   String uid = "";
@@ -19,6 +21,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
   void initState() {
     super.initState();
     prov = Provider.of<ProviderAdd>(context, listen: false);
+    prov1 = Provider.of<ProviderList>(context, listen: false);
     sharedPreferencesIntialize();
   }
 
@@ -123,6 +126,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                           prov.addTask(uid, title.text, desc.text);
 
                           if (prov.message == "") {
+                            prov1.fetchTasks(uid);
                             Navigator.of(context).pop();
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(

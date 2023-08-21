@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:task_manager/provider/addTaskProvider.dart';
+import 'package:task_manager/provider/userTaskListProvider.dart';
 
 // ignore: must_be_immutable
 class EditBottomSheet extends StatefulWidget {
@@ -15,19 +18,27 @@ class EditBottomSheet extends StatefulWidget {
 
 class _EditBottomSheetState extends State<EditBottomSheet> {
   ProviderAdd prov = ProviderAdd();
+  ProviderList prov1 = ProviderList();
   TextEditingController title = TextEditingController();
   TextEditingController desc = TextEditingController();
+  String uid = "";
 
   @override
   void initState() {
     super.initState();
     prov = Provider.of<ProviderAdd>(context, listen: false);
+    prov1 = Provider.of<ProviderList>(context, listen: false);
     controllerSetup();
   }
 
   controllerSetup() async {
     title = TextEditingController(text: widget.title);
     desc = TextEditingController(text: widget.desc);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    Map<String, dynamic> jwtDecodeToken =
+        JwtDecoder.decode(prefs.getString('token')!);
+    uid = jwtDecodeToken['_id'];
+    setState(() {});
   }
 
   @override
@@ -114,6 +125,7 @@ class _EditBottomSheetState extends State<EditBottomSheet> {
                       onPressed: () {
                         prov.deleteTask(widget.id!);
                         if (prov.message == "") {
+                          prov1.fetchTasks(uid);
                           Navigator.of(context).pop();
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -126,9 +138,11 @@ class _EditBottomSheetState extends State<EditBottomSheet> {
                     ElevatedButton.icon(
                       onPressed: () {
                         if (title.text.isNotEmpty && desc.text.isNotEmpty) {
-                          prov.updateTask(widget.id.toString(), title.text, desc.text);
+                          prov.updateTask(
+                              widget.id.toString(), title.text, desc.text);
 
                           if (prov.message == "") {
+                            prov1.fetchTasks(uid);
                             Navigator.of(context).pop();
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(

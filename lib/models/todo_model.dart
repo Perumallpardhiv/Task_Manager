@@ -1,6 +1,6 @@
 class userAllTaskResponseModel {
   bool? status;
-  List<userTaskList>? success;
+  late List<userTaskList> success;
 
   userAllTaskResponseModel({required this.status, required this.success});
 
@@ -17,8 +17,8 @@ class userAllTaskResponseModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['status'] = this.status;
-    if (this.success != null) {
-      data['success'] = this.success?.map((v) => v.toJson()).toList();
+    if (success != null) {
+      data['success'] = this.success.map((v) => v.toJson()).toList();
     }
     return data;
   }

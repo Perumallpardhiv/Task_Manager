@@ -5,13 +5,13 @@ import 'package:task_manager/const/base_url.dart';
 import 'package:task_manager/models/todo_model.dart';
 
 class ProviderList with ChangeNotifier {
-  List<userTaskList>? posts = [];
-  bool isLoading = true;
+  List<userTaskList> posts = [];
+  bool isLoading = false;
   String message = "";
 
-  Future fetchTasks(String userId) async {
-    // isLoading = true;
-    // notifyListeners();
+  void fetchTasks(String userId) async {
+    isLoading = true;
+    notifyListeners();
 
     try {
       var postBody = {"userId": userId};
@@ -27,6 +27,7 @@ class ProviderList with ChangeNotifier {
           jsonDecode(response.body),
         );
         posts = res.success;
+        notifyListeners();
         isLoading = false;
         notifyListeners();
       } else {

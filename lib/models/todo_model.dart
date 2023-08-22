@@ -9,7 +9,7 @@ class userAllTaskResponseModel {
     if (json['success'] != null) {
       success = <userTaskList>[];
       json['success'].forEach((v) {
-        success?.add(new userTaskList.fromJson(v));
+        success.add(new userTaskList.fromJson(v));
       });
     }
   }
@@ -17,9 +17,7 @@ class userAllTaskResponseModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['status'] = this.status;
-    if (success != null) {
-      data['success'] = this.success.map((v) => v.toJson()).toList();
-    }
+    data['success'] = this.success.map((v) => v.toJson()).toList();
     return data;
   }
 }

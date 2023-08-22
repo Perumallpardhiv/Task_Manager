@@ -11,7 +11,7 @@ A new Flutter project.
 Download or clone this repo by using the link below:
 
 ```
-[https://github.com/Perumallpardhiv/Task_Manager.git](https://github.com/Perumallpardhiv/Task_Manager.git)
+https://github.com/Perumallpardhiv/Task_Manager.git
 ```
 
 **Step 2:**

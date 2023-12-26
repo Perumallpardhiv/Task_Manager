@@ -1,6 +1,6 @@
 # TASK MANAGER
 
-A new Flutter project.
+A Flutter Project integrated with NodeJS Backend and stores the tasks in MongoDB
 
 ## Getting Started
 ## How to Use 

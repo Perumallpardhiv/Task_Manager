@@ -3,7 +3,6 @@
 A new Flutter project.
 
 ## Getting Started
-
 ## How to Use 
 
 **Step 1:**
@@ -31,14 +30,11 @@ flutter run
 ```
 
 ## Boilerplate Features:
-
 * Splash
 * Login
 * Task List
 * Add Task
 * Edit/Delete Task
-* Provider
-* Shared Preference
 
 ### Folder Structure
 Here is the core folder structure that Flutter provides.
@@ -71,8 +67,19 @@ lib/
 :-------------------------:|:-------------------------:|:---------------------
 ![](/assets/images/4.jpeg?raw=true "Optional Title")  |  ![](/assets/images/5.jpeg?raw=true "Optional Title") | ![](/assets/images/6.jpeg?raw=true "Optional Title")
 
-## Conclusion
 
+## Packages Used:
+```
+pubspec.yaml/
+|- http
+|- provider
+|- shared_preferences
+|- jwt_decoder
+|- lottie
+|- flutter_spinkit
+```
+
+## Conclusion
 I will be happy to answer any questions that you may have about this approach.
 
 If you liked my work, don’t forget to ⭐ star the repo to show your support.
